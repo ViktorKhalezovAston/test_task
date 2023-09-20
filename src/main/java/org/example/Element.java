@@ -9,7 +9,6 @@ public class Element {
         this.y = y;
     }
 
-
     public int getX() {
         return x;
     }
