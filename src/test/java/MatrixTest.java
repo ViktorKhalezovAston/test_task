@@ -42,6 +42,19 @@ public class MatrixTest {
         Assertions.assertEquals(0, neighbours.length);
     }
 
+    @ParameterizedTest
+    @MethodSource("getMatrixesWithDifferentSizes")
+    void getNeighboursOfElement_ShouldReturnNotNullArray_WhenMatrixHasDifferentSizes(Matrix matrixWithDifSize) {
+        matrix = matrixWithDifSize;
+
+        Element element = new Element(0, 0);
+
+        Element[] neighbours = matrix.getNeighboursOfElement(element);
+
+        Assertions.assertNotNull(neighbours);
+        Assertions.assertTrue(neighbours.length >= 0);
+    }
+
     static Stream<Element> getMiddleElements() {
         return Stream.of(new Element(1, 1),
                 new Element(1, 3),
@@ -71,6 +84,13 @@ public class MatrixTest {
                 new Element (5, 5),
                 new Element(5, 1),
                 new Element (1, 5));
+    }
+
+    static Stream<Matrix> getMatrixesWithDifferentSizes() {
+        return Stream.of(new Matrix(0, 0),
+                new Matrix(1, 1),
+                new Matrix(5, 0),
+                new Matrix(0, 5));
     }
 
 }
