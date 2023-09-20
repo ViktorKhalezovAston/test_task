@@ -8,45 +8,44 @@ public class Matrix {
     private int verticalSize;
     private int horizontalSize;
     private Element[][] array;
-    private List<Element> neighbours;
+
 
     public Matrix(int vertical, int horizontal) {
         verticalSize = vertical;
         horizontalSize = horizontal;
         array = new Element[vertical][horizontal];
         fillArray();
-        neighbours = new ArrayList<>();
     }
 
     public Element[] getNeighboursOfElement(Element element) {
-       if(hasElement(element)) {
-           int x = element.getX();
-           int y = element.getY();
+       List<Element> neighbours = new ArrayList<>();
 
-           addNeighbour(new Element(x + 1, y));
-           addNeighbour(new Element(x + 1, y - 1));
-           addNeighbour(new Element(x, y - 1));
-           addNeighbour(new Element(x - 1, y - 1));
-           addNeighbour(new Element(x - 1, y));
-           addNeighbour(new Element(x - 1, y + 1));
-           addNeighbour(new Element(x, y + 1));
-           addNeighbour(new Element(x + 1, y + 1));
+        int x = element.getX();
+        int y = element.getY();
+
+        if(hasElement(x, y)) {
+           checkAndAddNeighbour(x + 1, y, neighbours);
+           checkAndAddNeighbour(x + 1, y - 1, neighbours);
+           checkAndAddNeighbour(x, y - 1, neighbours);
+           checkAndAddNeighbour(x - 1,y - 1, neighbours);
+           checkAndAddNeighbour(x - 1, y, neighbours);
+           checkAndAddNeighbour(x - 1, y + 1, neighbours);
+           checkAndAddNeighbour(x, y + 1, neighbours);
+           checkAndAddNeighbour(x + 1,y + 1, neighbours);
        }
         return neighbours.stream().toArray(Element[]::new);
     }
 
-    private boolean hasElement(Element element) {
-        int x = element.getX();
-        int y = element.getY();
+    private boolean hasElement(int x, int y) {
         if(x < 0 || x > verticalSize - 1 || y < 0 || y > horizontalSize - 1) {
             return false;
         }
         return true;
     }
 
-    private boolean addNeighbour(Element element) {
-        if(hasElement(element)) {
-            neighbours.add(element);
+    private boolean checkAndAddNeighbour(int x, int y, List<Element> neighbours) {
+        if(hasElement(x, y)) {
+            neighbours.add(array[x][y]);
             return true;
         }
         return false;
